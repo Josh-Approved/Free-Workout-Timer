@@ -10,7 +10,10 @@
  *
  * Placement contract: render it at the SCREEN ROOT — a sibling of the scroll
  * content, directly under the screen's SafeAreaView — never inside a
- * ScrollView (it fills its nearest positioned ancestor). While a pane is
+ * ScrollView (it fills its nearest positioned ancestor). Because the pane is
+ * ABSOLUTELY POSITIONED, the parent SafeAreaView's padding never reaches it, so
+ * it must apply its own safe-area insets (useSafeAreaInsets) or its header
+ * renders under the status bar / Dynamic Island. While a pane is
  * open, give the hub content `accessibilityElementsHidden` +
  * `importantForAccessibility="no-hide-descendants"` so screen readers stay
  * contained. Android hardware back closes the pane.
@@ -32,6 +35,7 @@ import {
   findNodeHandle,
   StyleSheet,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Check } from 'lucide-react-native';
 import { ScreenHeader } from './ScreenHeader';
 import {
@@ -58,6 +62,10 @@ export function DrilldownSheet({ visible, title, onClose, right, children }: Pro
   const { c } = useTheme();
   const s = makeStyles(c);
   const { width } = useWindowDimensions();
+  // The pane is absolutely positioned, so the screen's SafeAreaView padding
+  // never reaches it — it pads itself. Bottom is left to the children's scroll
+  // padding, matching the screens' edges={['top','left','right']} convention.
+  const insets = useSafeAreaInsets();
   /** Stays mounted through the exit slide; 0 = in place, 1 = offscreen right. */
   const [rendered, setRendered] = useState(visible);
   const x = useRef(new Animated.Value(visible ? 0 : 1)).current;
@@ -123,6 +131,9 @@ export function DrilldownSheet({ visible, title, onClose, right, children }: Pro
       style={[
         s.pane,
         {
+          paddingTop: insets.top,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
           transform: [
             { translateX: x.interpolate({ inputRange: [0, 1], outputRange: [0, width] }) },
           ],
