@@ -19,15 +19,12 @@ import {
   RESTART_THRESHOLD_SECONDS,
 } from './useWorkoutPlayback';
 import { TIP_PRODUCT_IDS } from '../constants/tipProducts';
-import ReviewModal from '../components/ReviewModal';
 import TipJarSheet from '../components/TipJarSheet';
 import { WorkoutControls } from '../components/WorkoutControls';
 import { WorkoutProgressBar } from '../components/WorkoutProgressBar';
 import { WorkoutInfoPanels } from '../components/WorkoutInfoPanels';
 import { t } from '../i18n';
 
-const APP_STORE_ID = '6767314178';
-const ANDROID_PACKAGE_NAME = 'com.joshapproved.freeworkouttimer';
 import {
   useTheme,
   fontFamily,
@@ -49,8 +46,6 @@ export default function ActiveWorkoutScreen({ route, navigation }: Props) {
     displayState,
     isRunning,
     loaded,
-    showReview,
-    setShowReview,
     showTip,
     setShowTip,
     steps,
@@ -160,13 +155,6 @@ export default function ActiveWorkoutScreen({ route, navigation }: Props) {
 
   const modals = (
     <>
-      <ReviewModal
-        visible={showReview}
-        onDismiss={() => setShowReview(false)}
-        appName="Workout Timer"
-        iosAppStoreId={APP_STORE_ID}
-        androidPackageName={ANDROID_PACKAGE_NAME}
-      />
       {showTip && (
         <TipJarSheet
           visible

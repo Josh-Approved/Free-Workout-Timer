@@ -18,6 +18,7 @@ import TimerEditorScreen from './src/screens/TimerEditorScreen';
 import ActiveWorkoutScreen from './src/screens/ActiveWorkoutScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import Credits from './src/components/Credits';
+import { IOS_APP_STORE_ID, ANDROID_PACKAGE } from './src/lib/links';
 import { QA_MODE } from './src/qa/qaMode';
 
 // Hold the native launch screen until the JS splash takes over (no icon blink).
@@ -27,6 +28,15 @@ if (!QA_MODE) {
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+// Store identity for the canonical review prompt. Module scope on purpose — the
+// shell's session effect keys off this prop, so a fresh object every render
+// would re-run it. The shell owns the whole trigger (canon § Review prompt).
+const REVIEW = {
+  appName: 'Workout Timer',
+  iosAppStoreId: IOS_APP_STORE_ID,
+  androidPackageName: ANDROID_PACKAGE,
+};
 
 export default function App() {
   const [fontsLoaded] = useAppFonts();
@@ -40,7 +50,7 @@ export default function App() {
   const ready = fontsLoaded;
 
   return (
-    <AppShell ready={ready}>
+    <AppShell ready={ready} review={REVIEW}>
       <Stack.Navigator screenOptions={{ headerShown: false, animation: QA_MODE ? 'none' : undefined }}>
         <Stack.Screen name="TimerList" component={TimerListScreen} />
         <Stack.Screen name="TimerEditor" component={TimerEditorScreen} />

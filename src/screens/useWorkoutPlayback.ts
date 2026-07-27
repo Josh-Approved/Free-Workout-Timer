@@ -30,7 +30,6 @@ import {
   getMaxCycles,
   speakAndReactivate,
 } from '../audio/workoutCues';
-import { recordSuccessfulCompletion as recordReviewCompletion } from '../storage/reviewPrompt';
 import { recordSuccessfulCompletion as recordDonationCompletion } from '../storage/donationPrompt';
 import { TIP_JAR_ENABLED } from '../constants/features';
 import { t } from '../i18n';
@@ -70,7 +69,6 @@ export function useWorkoutPlayback(timerId: string, onExit: () => void) {
   const [displayState, setDisplayState] = useState<DisplayState>(stateRef.current);
   const [isRunning, setIsRunning] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [showReview, setShowReview] = useState(false);
   const [showTip, setShowTip] = useState(false);
 
   useEffect(() => {
@@ -203,15 +201,10 @@ export function useWorkoutPlayback(timerId: string, onExit: () => void) {
 
   useEffect(() => {
     if (displayState.mode !== 'complete') return;
-    // Review takes precedence on the same completion — see donation-prompt
-    // README for the canonical pattern. The donation counter still advances
-    // only when its own threshold is met, so deferring it here doesn't drop
-    // a prompt; it just lets the slower-burning surface go first.
+    // The review prompt is no longer a completion moment — the app shell counts
+    // sessions and owns that trigger (canon § Review prompt). A finished workout
+    // now only feeds the donation counter.
     (async () => {
-      if (await recordReviewCompletion()) {
-        setShowReview(true);
-        return;
-      }
       if (TIP_JAR_ENABLED && (await recordDonationCompletion())) {
         setShowTip(true);
       }
@@ -321,8 +314,6 @@ export function useWorkoutPlayback(timerId: string, onExit: () => void) {
     displayState,
     isRunning,
     loaded,
-    showReview,
-    setShowReview,
     showTip,
     setShowTip,
     // Ref reads are current by the time anything renders — the load effect
