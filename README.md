@@ -8,7 +8,7 @@ Build a timer once, run it as many times as you want. Set work and rest duration
 
 ## Who it's for
 
-Anyone who's tired of paywalls, ads, and account walls in workout timer apps. If you've bounced off the price or the upsells elsewhere, this is the same shape of tool with none of that — every feature is free, with no ads, no tracking, and no accounts.
+Anyone who's tired of paywalls, ads, and account walls in workout timer apps. If you've bounced off the price or the upsells elsewhere, this is the same shape of tool with none of that. Every feature is free, with no ads, no tracking, and no accounts.
 
 ## How to get it
 
@@ -31,7 +31,7 @@ Then scan the QR code with Expo Go (or press `i` for iOS simulator, `a` for Andr
 
 ## Privacy
 
-Your data stays with you. We don't collect any of it — no accounts, no tracking, no analytics.
+Your data stays with you. We don't collect any of it: no accounts, no tracking, no analytics.
 
 ## License
 
