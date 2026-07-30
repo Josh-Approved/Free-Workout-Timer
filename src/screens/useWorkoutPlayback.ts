@@ -30,8 +30,6 @@ import {
   getMaxCycles,
   speakAndReactivate,
 } from '../audio/workoutCues';
-import { recordSuccessfulCompletion as recordDonationCompletion } from '../storage/donationPrompt';
-import { TIP_JAR_ENABLED } from '../constants/features';
 import { t } from '../i18n';
 import {
   startLiveTimer,
@@ -69,7 +67,6 @@ export function useWorkoutPlayback(timerId: string, onExit: () => void) {
   const [displayState, setDisplayState] = useState<DisplayState>(stateRef.current);
   const [isRunning, setIsRunning] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [showTip, setShowTip] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -199,17 +196,9 @@ export function useWorkoutPlayback(timerId: string, onExit: () => void) {
     return stopInterval;
   }, [loaded]);
 
-  useEffect(() => {
-    if (displayState.mode !== 'complete') return;
-    // The review prompt is no longer a completion moment — the app shell counts
-    // sessions and owns that trigger (canon § Review prompt). A finished workout
-    // now only feeds the donation counter.
-    (async () => {
-      if (TIP_JAR_ENABLED && (await recordDonationCompletion())) {
-        setShowTip(true);
-      }
-    })();
-  }, [displayState.mode]);
+  // Completion is no longer a prompt moment: the app shell counts sessions and
+  // owns the review-prompt trigger (canon § Review prompt), and the tip jar is
+  // user-initiated only (Settings Support row, timer-list support link).
 
   const togglePause = () => {
     if (displayState.mode === 'complete') return;
@@ -314,8 +303,6 @@ export function useWorkoutPlayback(timerId: string, onExit: () => void) {
     displayState,
     isRunning,
     loaded,
-    showTip,
-    setShowTip,
     // Ref reads are current by the time anything renders — the load effect
     // fills them before flipping `loaded`.
     steps: stepsRef.current,

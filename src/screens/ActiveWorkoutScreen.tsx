@@ -18,8 +18,6 @@ import {
   phaseLabel,
   RESTART_THRESHOLD_SECONDS,
 } from './useWorkoutPlayback';
-import { TIP_PRODUCT_IDS } from '../constants/tipProducts';
-import TipJarSheet from '../components/TipJarSheet';
 import { WorkoutControls } from '../components/WorkoutControls';
 import { WorkoutProgressBar } from '../components/WorkoutProgressBar';
 import { WorkoutInfoPanels } from '../components/WorkoutInfoPanels';
@@ -46,8 +44,6 @@ export default function ActiveWorkoutScreen({ route, navigation }: Props) {
     displayState,
     isRunning,
     loaded,
-    showTip,
-    setShowTip,
     steps,
     totalDuration,
     maxCycles,
@@ -153,18 +149,6 @@ export default function ActiveWorkoutScreen({ route, navigation }: Props) {
     />
   );
 
-  const modals = (
-    <>
-      {showTip && (
-        <TipJarSheet
-          visible
-          onDismiss={() => setShowTip(false)}
-          productIds={TIP_PRODUCT_IDS}
-        />
-      )}
-    </>
-  );
-
   if (!loaded) {
     return (
       <SafeAreaView style={s.container}>
@@ -206,7 +190,6 @@ export default function ActiveWorkoutScreen({ route, navigation }: Props) {
         </View>
 
         {progressBar}
-        {modals}
       </SafeAreaView>
     );
   }
@@ -239,7 +222,6 @@ export default function ActiveWorkoutScreen({ route, navigation }: Props) {
       {progressBar}
 
       {controls}
-      {modals}
     </SafeAreaView>
   );
 }

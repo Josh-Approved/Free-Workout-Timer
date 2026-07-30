@@ -166,7 +166,7 @@ Open source: https://github.com/Josh-Approved/workout-timer
 What it doesn't do:
 No paywall. No ads. No tracking. No accounts. No subscriptions. The whole app is the whole app — every feature is here, free.
 
-Josh Approved is supported by the people who use it. No ads, no subscriptions, no data harvest — what keeps this sustainable is whether it's worth a few dollars to you. If it is, please consider donating: https://buymeacoffee.com/jtysonwilliams
+Josh Approved is supported by the people who use it. No ads, no subscriptions, no data harvest. What keeps this sustainable is whether it's worth a few dollars to you. If it is, there's an optional tip jar in the app.
 
 Send feedback: feedback@joshapproved.com
 ```
@@ -270,7 +270,7 @@ Open source: https://github.com/Josh-Approved/workout-timer
 What it doesn't do:
 No paywall. No ads. No tracking. No accounts. No subscriptions. The whole app is the whole app — every feature is here, free.
 
-Josh Approved is supported by the people who use it. No ads, no subscriptions, no data harvest — what keeps this sustainable is whether it's worth a few dollars to you. If it is, please consider donating: https://buymeacoffee.com/jtysonwilliams
+Josh Approved is supported by the people who use it. No ads, no subscriptions, no data harvest. What keeps this sustainable is whether it's worth a few dollars to you. If it is, there's an optional tip jar in the app.
 
 Send feedback: feedback@joshapproved.com
 ```

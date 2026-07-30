@@ -11,7 +11,6 @@ export const APP_NAME = 'Workout Timer - Josh Approved';
 export const IOS_APP_STORE_ID = '6767314178';
 export const ANDROID_PACKAGE = 'com.joshapproved.freeworkouttimer';
 
-export const BMAC_URL = 'https://buymeacoffee.com/jtysonwilliams';
 export const STUDIO_URL = 'https://joshapproved.com';
 export const REPO_URL = 'https://github.com/Josh-Approved/workout-timer';
 export const PRIVACY_URL =
@@ -26,10 +25,6 @@ export function versionLabel(): string {
 
 export function openUrl(url: string): void {
   Linking.openURL(url).catch(() => {});
-}
-
-export function openBmac(): void {
-  openUrl(BMAC_URL);
 }
 
 export function openFeedbackMail(): void {
