@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description    = package['description']
   s.license        = 'MIT'
   s.author         = { 'Josh Approved' => 'hello@joshapproved.com' }
-  s.homepage       = 'https://github.com/Josh-Approved/josh-approved-factory'
+  s.homepage       = 'https://github.com/Josh-Approved/workout-timer'
   s.platforms      = { :ios => '15.1', :tvos => '15.1' }
   s.swift_version  = '5.9'
   s.source         = { git: '' }

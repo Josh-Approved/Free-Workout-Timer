@@ -20,13 +20,14 @@ engine; this module never plays sound itself.
 
 ## Install
 
-In a host app:
+This module ships inside the app, at `modules/live-timer/` in this repo. It's
+wired in as a local package, not something you add separately:
 
 ```jsonc
 // package.json
 {
   "dependencies": {
-    "@josh-approved/live-timer": "file:../josh-approved-factory/modules/live-timer"
+    "live-timer": "file:./modules/live-timer"
   }
 }
 ```
@@ -34,7 +35,7 @@ In a host app:
 ```jsonc
 // app.json -> expo.plugins
 [
-  "@josh-approved/live-timer",
+  "live-timer",
   {
     "widgetDisplayName": "Free Workout Timer"
   }
