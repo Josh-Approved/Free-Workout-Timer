@@ -12,9 +12,9 @@ Anyone who's tired of paywalls, ads, and account walls in workout timer apps. If
 
 ## How to get it
 
-Coming soon to the App Store and Play Store.
+Free on the [App Store](https://apps.apple.com/us/app/workout-timer-josh-approved/id6767314178) and [Google Play](https://play.google.com/store/apps/details?id=com.joshapproved.freeworkouttimer), no account, nothing to sign up for.
 
-In the meantime, run it locally — see below.
+Or run it locally, see below.
 
 ## Run it locally
 
@@ -35,7 +35,7 @@ Your data stays with you. We don't collect any of it — no accounts, no trackin
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+GPL-3.0, see [LICENSE](LICENSE).
 
 ## Feedback
 
