@@ -35,7 +35,7 @@ Your data stays with you. We don't collect any of it: no accounts, no tracking, 
 
 ## License
 
-GPL-3.0, see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
 
 ## Feedback
 
