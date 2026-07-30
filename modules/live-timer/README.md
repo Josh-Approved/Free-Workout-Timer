@@ -1,7 +1,7 @@
 # @josh-approved/live-timer
 
 A persistent on-screen timer for Josh Approved apps. One pinned component
-that updates in place — never a stream of notifications.
+that updates in place. Never a stream of notifications.
 
 - **iOS:** ActivityKit Live Activity (lock screen + Dynamic Island)
 - **Android:** Foreground service with an ongoing notification
