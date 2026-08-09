@@ -3,6 +3,7 @@ import { TimerConfig, AppSettings } from '../types';
 import { DEFAULT_TIMERS, DEFAULT_SETTINGS } from '../constants/defaultTimers';
 import { QA_MODE } from '../qa/qaMode';
 import { QA_TIMERS } from '../qa/fixtures';
+import { logEvent, logError } from '../feedback/log';
 
 const TIMERS_KEY = '@fwt/timers';
 const SETTINGS_KEY = '@fwt/settings';
@@ -13,11 +14,20 @@ const initialTimers = (): TimerConfig[] => (QA_MODE ? QA_TIMERS : DEFAULT_TIMERS
 export async function loadTimers(): Promise<TimerConfig[]> {
   try {
     const json = await AsyncStorage.getItem(TIMERS_KEY);
-    if (json) return JSON.parse(json);
+    if (json) {
+      const timers = JSON.parse(json) as TimerConfig[];
+      logEvent('timers', 'loaded', { count: Array.isArray(timers) ? timers.length : 0 });
+      return timers;
+    }
     const seeds = initialTimers();
+    logEvent('timers', 'seeded defaults (nothing stored yet)', { count: seeds.length });
     await saveTimers(seeds);
     return seeds;
-  } catch {
+  } catch (err) {
+    // Silent until now, and it is the worst failure this app has: the user's
+    // own timers are quietly replaced by the defaults. "My timers disappeared"
+    // was unanswerable without this line.
+    logError('timers', err, { during: 'load', fellBackTo: 'defaults' });
     return initialTimers();
   }
 }
@@ -51,6 +61,12 @@ export async function loadSettings(): Promise<AppSettings> {
     if (json) {
       const saved = JSON.parse(json);
       if (!saved._version || saved._version < SETTINGS_VERSION) {
+        // A settings reset the user never asked for — worth a line, because
+        // "all my sounds went back to default after an update" starts here.
+        logEvent('settings', 'reset to defaults on version bump', {
+          from: Number(saved._version) || 0,
+          to: SETTINGS_VERSION,
+        });
         await saveSettings(DEFAULT_SETTINGS);
         return DEFAULT_SETTINGS;
       }
@@ -61,7 +77,8 @@ export async function loadSettings(): Promise<AppSettings> {
       };
     }
     return DEFAULT_SETTINGS;
-  } catch {
+  } catch (err) {
+    logError('settings', err, { during: 'load', fellBackTo: 'defaults' });
     return DEFAULT_SETTINGS;
   }
 }

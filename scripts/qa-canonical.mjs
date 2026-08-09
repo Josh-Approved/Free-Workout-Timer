@@ -2853,14 +2853,18 @@ function ruleA11yClaimsBacked(results) {
 
   const detail = [...unproven];
   if (ungated.length) {
-    detail.push(`no mechanical gate yet (proof is the written line in STORE_LISTING.md): ${ungated.join(', ')}`);
+    detail.push(`no mechanical gate yet — proof is the written line in STORE_LISTING.md, itself enforced by qa-store-submission's apple/a11y-published-unproven + apple/a11y-overclaim: ${ungated.join(', ')}`);
   }
   if (unproven.length) {
     const msg = 'An accessibility feature is published to the App Store while the gate that proves it is not green (canon § Accessibility). Either fix the app or set the feature false in this app\'s privacy.json — an accessibility claim is the one kind of copy a person can be harmed by trusting.';
     return enforce ? fail(id, msg, detail) : warn(id, msg, detail);
   }
+  // An UNGATED claim is not an unproven one — it is carried by a written proof
+  // line that a different gate already enforces. Treating it as a warning here
+  // would make this rule permanently yellow and therefore permanently ignored,
+  // which is how the original claims went unchecked for a year.
   if (ungated.length) {
-    return warn(id, `Every gated accessibility claim is green; ${ungated.length} claim(s) still rest on a written proof line rather than a gate`, detail);
+    return pass(id, `All ${claimed.length} published accessibility claims are backed — ${claimed.length - ungated.length} by a green gate, ${ungated.length} by a written proof line`, detail);
   }
   return pass(id, `All ${claimed.length} published accessibility claims are backed by green gates`);
 }
