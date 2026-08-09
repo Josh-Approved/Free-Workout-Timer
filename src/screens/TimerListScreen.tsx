@@ -141,7 +141,7 @@ export default function TimerListScreen({ navigation }: Props) {
               </View>
               <ChevronRight
                 size={20}
-                color={c.fgSubtle}
+                color={c.fgMuted}
                 strokeWidth={1.5}
                 importantForAccessibility="no"
               />

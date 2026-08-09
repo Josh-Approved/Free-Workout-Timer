@@ -42,7 +42,7 @@ export function DrilldownRow({ label, value, placeholder, onPress }: Props) {
       <Text style={[s.value, placeholder && s.valueMuted]} numberOfLines={1}>
         {value}
       </Text>
-      <ChevronRight size={18} color={c.fgSubtle} strokeWidth={1.5} />
+      <ChevronRight size={18} color={c.fgMuted} strokeWidth={1.5} />
     </Pressable>
   );
 }

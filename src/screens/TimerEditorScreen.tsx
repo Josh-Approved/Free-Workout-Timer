@@ -149,7 +149,7 @@ export default function TimerEditorScreen({ route, navigation }: Props) {
                 value={form.name}
                 onChangeText={(v) => set('name', v)}
                 placeholder={t('editor.namePlaceholder')}
-                placeholderTextColor={c.fgSubtle}
+                placeholderTextColor={c.fgMuted}
                 maxLength={60}
                 returnKeyType="done"
                 accessibilityLabel={t('editor.nameA11y')}
