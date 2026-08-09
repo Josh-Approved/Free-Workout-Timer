@@ -19,6 +19,7 @@ import {
   Colors,
 } from '../theme';
 import { t } from '../i18n';
+import { useReducedMotion } from './Dialogs';
 
 interface Props {
   visible: boolean;
@@ -45,6 +46,7 @@ export default function ValueEditorModal({
 }: Props) {
   const { c } = useTheme();
   const s = makeStyles(c);
+  const reduceMotion = useReducedMotion();
 
   const minRef = useRef<TextInput>(null);
   const secRef = useRef<TextInput>(null);
@@ -84,7 +86,9 @@ export default function ValueEditorModal({
     <Modal
       visible={visible}
       transparent
-      animationType="fade"
+      // Reduce Motion is a prop here, not a hook, so nothing else in the app
+      // guards it — a literal animationType animates regardless of the setting.
+      animationType={reduceMotion ? 'none' : 'fade'}
       statusBarTranslucent
       onRequestClose={onCancel}
       onShow={focusFirst}
