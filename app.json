@@ -18,7 +18,8 @@
         "ITSAppUsesNonExemptEncryption": false,
         "LiveTimerURLScheme": "fwt",
         "CFBundleDisplayName": "Workout Timer",
-        "CFBundleName": "Workout Timer"
+        "CFBundleName": "Workout Timer",
+        "CFBundleLocalizations": ["en", "es", "de", "fr", "it", "pt-BR", "ja"]
       }
     },
     "scheme": "fwt",
@@ -69,7 +70,8 @@
       "expo-iap",
       "expo-mail-composer",
       "expo-sqlite",
-      "expo-sharing"
+      "expo-sharing",
+      "./plugins/withAndroidLocaleConfig"
     ]
   }
 }
