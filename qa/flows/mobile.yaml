@@ -44,6 +44,9 @@ appId: com.joshapproved.freeworkouttimer
 - tapOn:
     text: "Back"
     retryTapIfNoChange: true
+- scrollUntilVisible:
+    element: { text: "Start Standard Tabata" }
+    direction: UP
 - tapOn:
     text: "Start Standard Tabata"
     retryTapIfNoChange: true

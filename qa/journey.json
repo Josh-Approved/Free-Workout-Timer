@@ -1,5 +1,5 @@
 {
-  "$comment": "FWT screenshot traversal, copy-free. Source of truth for qa/flows/mobile.yaml (GENERATED \u2014 run scripts/qa/compile-flow.mjs). Screenshot names match qa/screenshots.config.json sources (active\u2192core slot, editor, list). Mirrors the proven hand-written flow.",
+  "$comment": "FWT screenshot traversal, copy-free. Source of truth for qa/flows/mobile.yaml (GENERATED \u2014 run scripts/qa/compile-flow.mjs). Screenshot names match qa/screenshots.config.json sources (active\u2192core slot, editor, list). Mirrors the proven hand-written flow. NOTE: returning from the climbing editor leaves the list scrolled DOWN (scroll position is restored, as a user expects), so the first timer's start control can sit above the fold on a phone at large text — scroll back UP before tapping it. Without that step the iPhone f1.3 cells failed: on the SE the control was off-tree (tap not found), on the 6.9\" its bounds were partly above the screen (y=-57) and Maestro tapped the status bar instead.",
   "appId": "com.joshapproved.freeworkouttimer",
   "clearState": true,
   "diagnosticLaunchShot": true,
@@ -44,6 +44,10 @@
     },
     {
       "tap": "@back"
+    },
+    {
+      "scrollUntilVisible": "@start-tabata",
+      "scrollDirection": "up"
     },
     {
       "tap": "@start-tabata"
