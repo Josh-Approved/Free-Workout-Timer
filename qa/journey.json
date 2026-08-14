@@ -1,5 +1,5 @@
 {
-  "$comment": "FWT screenshot traversal, copy-free. Source of truth for qa/flows/mobile.yaml (GENERATED \u2014 run scripts/qa/compile-flow.mjs). Screenshot names match qa/screenshots.config.json sources (active\u2192core slot, editor, list). Mirrors the proven hand-written flow. NOTE: returning from the climbing editor leaves the list scrolled DOWN (scroll position is restored, as a user expects), so the first timer's start control can sit above the fold on a phone at large text — scroll back UP before tapping it. Without that step the iPhone f1.3 cells failed: on the SE the control was off-tree (tap not found), on the 6.9\" its bounds were partly above the screen (y=-57) and Maestro tapped the status bar instead.",
+  "$comment": "FWT screenshot traversal, copy-free. Source of truth for qa/flows/mobile.yaml (GENERATED — run scripts/qa/compile-flow.mjs). Screenshot names match qa/screenshots.config.json sources (active→core slot, editor, list). Mirrors the proven hand-written flow. NOTE: returning from the climbing editor leaves the list scrolled DOWN (scroll position is restored, as a user expects), so the first timer's start control can sit above the fold on a phone at large text — scroll back UP before tapping it. Without that step the iPhone f1.3 cells failed: on the SE the control was off-tree (tap not found), on the 6.9\" its bounds were partly above the screen (y=-57) and Maestro tapped the status bar instead.",
   "appId": "com.joshapproved.freeworkouttimer",
   "clearState": true,
   "diagnosticLaunchShot": true,
@@ -131,7 +131,7 @@
     }
   ],
   "survival": {
-    "$comment": "T4 chaos net \u2014 state-survival subflow (compiles to qa/flows/state-survival.yaml; full profile + nightly, NOT per-PR). Core mutating action = create a new timer, which persists to disk. Then REAL process death (killApp on Android / stopApp on iOS), then relaunch keeping state. Intent oracle: the created timer is still in the list after the kill. The leading assertNot proves 'Chaos Interval' wasn't seeded.",
+    "$comment": "T4 chaos net — state-survival subflow (compiles to qa/flows/state-survival.yaml; full profile + nightly, NOT per-PR). Core mutating action = create a new timer, which persists to disk. Then REAL process death (killApp on Android / stopApp on iOS), then relaunch keeping state. Intent oracle: the created timer is still in the list after the kill. The leading assertNot proves 'Chaos Interval' wasn't seeded.",
     "steps": [
       {
         "waitFor": "@app-title",
@@ -184,5 +184,67 @@
         "assert": "@survival-timer"
       }
     ]
+  },
+  "upgrade": {
+    "$comment": "T5 upgrade harness — cross-version subflow (compiles to qa/flows/upgrade-write.yaml + upgrade-assert.yaml; run by scripts/qa/upgrade-test.mjs against qa/released/<platform>, full profile + nightly, NOT per-PR). The bug class: install a HEAD build over months-old data and silently lose it. 'write' runs on the LAST-RELEASED binary (QA seed + create a timer named Legacy Interval, a name absent from the seed); the harness then installs HEAD OVER it (never uninstall) and runs 'assert', which proves BOTH a seeded timer (Standard Tabata) AND the written one survived. If HEAD reads the persisted store differently than the released build wrote it, Legacy Interval is gone and the assert fails. Neither flow may clear state — persistence across the install is the whole point.",
+    "write": {
+      "steps": [
+        {
+          "waitFor": "@app-title",
+          "timeout": 30000
+        },
+        {
+          "waitFor": "@edit-tabata",
+          "timeout": 15000
+        },
+        {
+          "assertNot": "@upgrade-timer"
+        },
+        {
+          "tap": "@create-new"
+        },
+        {
+          "waitFor": "@name-input",
+          "timeout": 10000
+        },
+        {
+          "tap": "@name-input"
+        },
+        {
+          "type": "Legacy Interval"
+        },
+        {
+          "tap": "@save-timer"
+        },
+        {
+          "waitFor": "@app-title",
+          "timeout": 10000
+        },
+        {
+          "assert": "@upgrade-timer"
+        },
+        {
+          "wait": 2000
+        }
+      ]
+    },
+    "assert": {
+      "steps": [
+        {
+          "waitFor": "@app-title",
+          "timeout": 30000
+        },
+        {
+          "waitFor": "@edit-tabata",
+          "timeout": 15000
+        },
+        {
+          "assert": "@edit-tabata"
+        },
+        {
+          "assert": "@upgrade-timer"
+        }
+      ]
+    }
   }
 }
