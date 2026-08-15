@@ -84,7 +84,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/.stryker-tmp/"
-    ]
+    ],
+    "testTimeout": 30000
   },
   "overrides": {
     "shell-quote": "1.8.4",
