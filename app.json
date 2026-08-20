@@ -6,11 +6,6 @@
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FAFAF7"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.joshapproved.freeworkouttimer",
@@ -71,6 +66,15 @@
       "expo-mail-composer",
       "expo-sqlite",
       "expo-sharing",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#FAFAF7"
+        }
+      ],
+      "expo-status-bar",
       "./plugins/withAndroidLocaleConfig"
     ]
   }

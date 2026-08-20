@@ -39,7 +39,7 @@ const PRIVACY_URL = `${GITHUB_REPO_URL}/blob/main/PRIVACY.md`;
 const reviewUrl =
   Platform.OS === 'ios'
     ? `itms-apps://apps.apple.com/app/id${APP_STORE_ID}?action=write-review`
-    : `https://play.google.com/store/apps/details?id=${ANDROID_PACKAGE_NAME}&showAllReviews=true`;
+    : `https://play.google.com/store/apps/details?id=${ANDROID_PACKAGE_NAME}`;
 
 function formatVersion(): string {
   const version = Application.nativeApplicationVersion ?? '—';
