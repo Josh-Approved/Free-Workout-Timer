@@ -5,7 +5,7 @@
       "id": null
     },
     "exercise": {
-      "text": "Exercise start",
+      "text": "Exercise start: Bell",
       "id": null
     },
     "settings": {
@@ -22,6 +22,14 @@
     },
     "feedback-bug-option": {
       "text": "Report a bug. Something is broken or not working right",
+      "id": null
+    },
+    "sound-style-bell": {
+      "text": "Exercise start: Bell",
+      "id": null
+    },
+    "sound-work-row-bell": {
+      "text": "Exercise start: Bell",
       "id": null
     }
   }

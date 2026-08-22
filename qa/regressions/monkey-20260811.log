@@ -1,0 +1,63 @@
+# monkey crash — app=workout-timer pkg=com.joshapproved.freeworkouttimer seed=20260811 events=50000 throttle=50 date=2026-08-11
+# kind=java errorType=IllegalArgumentException topFrame=MotionEvent.nativeGetAxisValue(Native Method)
+# replay: node scripts/qa/monkey.mjs ../workout-timer --seed 20260811 --events 50000
+
+## monkey stdout (tail)
+// 	at android.view.InputEventReceiver.nativeConsumeBatchedInputEvents(Native Method)
+// 	at android.view.InputEventReceiver.consumeBatchedInputEvents(InputEventReceiver.java:247)
+// 	at android.view.ViewRootImpl.doConsumeBatchedInput(ViewRootImpl.java:9294)
+// 	at android.view.ViewRootImpl$ConsumeBatchedInputRunnable.run(ViewRootImpl.java:9428)
+// 	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1339)
+// 	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1348)
+// 	at android.view.Choreographer.doCallbacks(Choreographer.java:952)
+// 	at android.view.Choreographer.doFrame(Choreographer.java:875)
+// 	at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1322)
+// 	at android.os.Handler.handleCallback(Handler.java:958)
+// 	at android.os.Handler.dispatchMessage(Handler.java:99)
+// 	at android.os.Looper.loopOnce(Looper.java:205)
+// 	at android.os.Looper.loop(Looper.java:294)
+// 	at android.app.ActivityThread.main(ActivityThread.java:8177)
+// 	at java.lang.reflect.Method.invoke(Native Method)
+// 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
+// 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
+// 
+** System appears to have crashed at event 7952 of 50000 using seed 20260811
+
+
+## logcat slice
+08-11 00:22:58.569 24420 24420 I Monkey  : :Sending Touch (ACTION_UP): 0:(521.4365,1668.8281)
+08-11 00:22:58.570   994   994 D TaplEvents: TIS / TouchInteractionService.onInputEvent: MotionEvent { action=ACTION_UP, actionButton=0, id[0]=0, x[0]=521.4365, y[0]=1668.8281, toolType[0]=TOOL_TYPE_UNKNOWN, buttonState=0, classification=NONE, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=8545240, downTime=8545220, deviceId=-1, source=0x1002, displayId=0, eventId=-103415561 }
+08-11 00:22:58.570 24435 24435 E ScrollView: Invalid pointerId=-1 in onTouchEvent
+08-11 00:22:58.573 24435 24435 E InputEventReceiver: Exception dispatching input event.
+08-11 00:22:58.573 24435 24435 D AndroidRuntime: Shutting down VM
+--------- beginning of crash
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: FATAL EXCEPTION: main
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: Process: com.joshapproved.freeworkouttimer, PID: 24435
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: java.lang.IllegalArgumentException: invalid pointerIndex -1 for MotionEvent { action=POINTER_UP(1), id[0]=0, x[0]=508.143, y[0]=1436.56, toolType[0]=UNKNOWN, id[1]=1, x[1]=0, y[1]=613.696, toolType[1]=UNKNOWN, pointerCount=2, eventTime=8545239000000, downTime=8545220000000, deviceId=-1, source=TOUCHSCREEN, displayId=0, eventId=-116702185}
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.MotionEvent.nativeGetAxisValue(Native Method)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.MotionEvent.getY(MotionEvent.java:2667)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.widget.ScrollView.onTouchEvent(ScrollView.java:913)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.facebook.react.views.scroll.ReactScrollView.onTouchEvent(ReactScrollView.java:660)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.core.NativeViewGestureHandler$NativeViewGestureHandlerHook$DefaultImpls.sendTouchEvent(NativeViewGestureHandler.kt:252)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.core.NativeViewGestureHandler$ScrollViewHook.sendTouchEvent(NativeViewGestureHandler.kt:337)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.core.NativeViewGestureHandler.onHandle(NativeViewGestureHandler.kt:149)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.core.GestureHandler.handle(GestureHandler.kt:392)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.core.GestureHandlerOrchestrator.deliverEventToGestureHandler(GestureHandlerOrchestrator.kt:314)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.core.GestureHandlerOrchestrator.deliverEventToGestureHandlers(GestureHandlerOrchestrator.kt:266)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.core.GestureHandlerOrchestrator.onTouchEvent(GestureHandlerOrchestrator.kt:57)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.react.RNGestureHandlerRootHelper.dispatchTouchEvent(RNGestureHandlerRootHelper.kt:119)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.swmansion.gesturehandler.react.RNGestureHandlerRootView.dispatchTouchEvent(RNGestureHandlerRootView.kt:37)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3120)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2801)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3120)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2801)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3120)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2801)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3120)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2801)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3120)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2801)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3120)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2801)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.android.internal.policy.DecorView.superDispatchTouchEvent(DecorView.java:490)
+08-11 00:22:58.577 24435 24435 E AndroidRuntime: 	at com.android.internal.policy.PhoneWindow.superDispatchTouchEvent(PhoneWindow.java:1904)
