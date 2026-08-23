@@ -801,6 +801,10 @@ const ruleVoiceControlNameMatch = () => {
   for (const file of files) {
     const src = readText(file);
     if (!src) continue;
+    // Cheap pre-filter — building a TS SourceFile for every .tsx roughly doubles
+    // the linter's runtime, and a file with no accessibilityLabel anywhere in it
+    // can never produce a finding.
+    if (!src.includes('accessibilityLabel')) continue;
     const sf = ts.createSourceFile(file, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
     const visit = (node) => {
       if (ts.isJsxElement(node) || ts.isJsxSelfClosingElement(node)) {
